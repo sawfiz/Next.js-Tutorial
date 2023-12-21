@@ -22,7 +22,7 @@ export const authOptions: NextAuthOptions = {
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
-        username: { label: 'Email', type: 'email', placeholder: 'Email' },
+        email: { label: 'Email', type: 'email', placeholder: 'email' },
         password: {
           label: 'Password',
           type: 'password',
@@ -30,6 +30,7 @@ export const authOptions: NextAuthOptions = {
         },
       },
       async authorize(credentials, req) {
+        console.log(credentials)
         // Add logic here to look up the user from the credentials supplied
         // const user = { id: '1', name: 'J Smith', email: 'jsmith@example.com' };
         if (!credentials?.email || !credentials.password) return null;
@@ -39,12 +40,13 @@ export const authOptions: NextAuthOptions = {
         });
 
         if (!user) return null;
-
+        
         const passwordMatch = bcrypt.compare(
           credentials.password,
           user.hashedPassword!
-        );
-
+          );
+          
+          console.log("🚀 ~ file: route.ts:50 ~ authorize ~ user", user)
         return passwordMatch ? user : null;
       },
     }),

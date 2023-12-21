@@ -1,5 +1,5 @@
-import React, { ReactNode } from 'react';
-import adminHome from './adminHome';
+import React, { ReactNode } from "react";
+import adminHome from "./adminHome";
 
 interface Props {
   children: ReactNode;

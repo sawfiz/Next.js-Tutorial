@@ -1,12 +1,16 @@
 // Navbar.tsx
-import React from 'react';
-import { getServerSession } from 'next-auth';
-import { authOptions } from './api/auth/[...nextauth]/route';
-import Image from 'next/image';
-import Link from 'next/link';
+import React from "react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
+import Image from "next/image";
+import Link from "next/link";
 
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
+  const imageSrc =
+    session && session.user && session.user.image
+      ? session.user.image
+      : "/Unknown_person.jpg";
 
   return (
     <div className="flex bg-slate-200 p-5 space-x-3">
@@ -16,12 +20,13 @@ const Navbar = async () => {
       {session && (
         <>
           <Image
-            className='rounded-full'
-            src={session.user!.image}
+            className="rounded-full"
+            src={imageSrc}
             width={25}
             height={25}
-            alt={'User Image'}
+            alt={"User Image"}
           />
+          {/* <div>{session.user!.email}</div> */}
           <Link href="/api/auth/signout">Sign Out</Link>
         </>
       )}
